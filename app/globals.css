@@ -4,6 +4,26 @@
   --background: #ffffff;
   --foreground: #171717;
 }
+/* Prevent horizontal overflow */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Fix for flex containers */
+.flex, .grid {
+  min-width: 0;
+}
+
+/* Ensure images don't overflow */
+img {
+  max-width: 100%;
+  height: auto;
+}
 
 @theme inline {
   --color-background: var(--background);

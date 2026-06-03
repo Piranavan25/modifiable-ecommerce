@@ -1,0 +1,123 @@
+{
+  "type": "column",
+  "className": "min-h-screen w-full",
+  "children": [
+    {
+      "component": "Navbar",
+      "props": {
+        "logoText": "ModuShop",
+        "showSearch": true,
+        "showCart": true,
+        "showProfile": true,
+        "styles": {
+          "backgroundColor": "bg-white",
+          "logoColor": "text-orange-500",
+          "buttonBackgroundColor": "bg-orange-500",
+          "containerMaxWidth": "max-w-7xl"
+        }
+      }
+    },
+    {
+      "type": "column",
+      "className": "flex-1",
+      "children": [
+        {
+          "type": "row",
+          "className": "max-w-7xl mx-auto w-full px-6 pt-6 gap-6",
+          "children": [
+            {
+              "component": "CategoryMenu",
+              "width": "w-64",
+              "props": {
+                "styles": {
+                  "width": "w-64"
+                }
+              }
+            },
+            {
+              "component": "HeroBanner",
+              "className": "flex-1 min-w-0",
+              "props": {
+                "autoplay": true,
+                "delay": 3000,
+                "loop": true,
+                "showPagination": true,
+                "showBadge": true,
+                "showSubtitle": true,
+                "showButton": true,
+                "imagePosition": "right",
+                "rounded": true,
+                "styles": {
+                  "sectionBackground": "bg-transparent",
+                  "cardBackground": "bg-white",
+                  "containerMaxWidth": "w-full",
+                  "paddingY": "py-0"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "component": "BrandSection",
+          "props": {
+            "title": "Featured Brands",
+            "styles": {
+              "containerMaxWidth": "max-w-7xl",
+              "gridCols": "grid-cols-3 md:grid-cols-6"
+            }
+          }
+        },
+        {
+          "component": "FlashSaleSection",
+          "props": {
+            "title": "Flash Sale",
+            "styles": {
+              "containerMaxWidth": "max-w-7xl",
+              "titleColor": "text-red-500"
+            }
+          }
+        },
+        {
+          "component": "StaticBanner",
+          "props": {
+            "image": "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da",
+            "styles": {
+              "containerMaxWidth": "max-w-7xl",
+              "height": "h-48"
+            }
+          }
+        },
+        {
+          "component": "CategoriesSection",
+          "props": {
+            "title": "Categories",
+            "styles": {
+              "containerMaxWidth": "max-w-7xl",
+              "gridCols": "grid-cols-2 md:grid-cols-4 lg:grid-cols-8"
+            }
+          }
+        },
+        {
+          "component": "JustForYouSection",
+          "props": {
+            "title": "Just For You",
+            "styles": {
+              "containerMaxWidth": "max-w-7xl",
+              "viewAllColor": "text-orange-500"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "component": "Footer",
+      "props": {
+        "logoText": "ModuShop",
+        "styles": {
+          "backgroundColor": "bg-slate-900",
+          "containerMaxWidth": "max-w-7xl"
+        }
+      }
+    }
+  ]
+}

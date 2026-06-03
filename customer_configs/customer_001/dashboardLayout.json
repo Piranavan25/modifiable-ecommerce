@@ -1,0 +1,97 @@
+{
+  "type": "column",
+  "className": "min-h-screen w-full bg-gray-50",
+  "children": [
+    {
+      "component": "Navbar",
+      "props": {
+        "logoText": "MODU LUXE",
+        "showSearch": true,
+        "showCart": true,
+        "showProfile": true,
+        "styles": {
+          "backgroundColor": "bg-white",
+          "logoColor": "text-gray-900",
+          "buttonBackgroundColor": "bg-gray-100",
+          "buttonTextColor": "text-gray-900",
+          "searchBorderColor": "border-gray-300"
+        }
+      }
+    },
+    {
+      "component": "HeroBanner",
+      "autoplay": true,
+      "delay": 3000,
+      "loop": true,
+      "showPagination": true,
+      "showButton": true,
+      "showSubtitle": true,
+      "imagePosition": "left",
+      "rounded": true,
+      "styles": {
+        "sectionBackground": "bg-gray-100",
+        "cardBackground": "bg-white",
+        "titleTextColor": "text-gray-900",
+        "subtitleTextColor": "text-gray-700",
+        "buttonBackgroundColor": "bg-gray-900",
+        "buttonTextColor": "text-white",
+        "containerMaxWidth": "w-full",
+        "paddingY": "py-20"
+      }
+    },
+    {
+      "component": "FlashSaleSection",
+      "props": {
+        "title": "Flash Sale",
+        "styles": {
+          "containerMaxWidth": "max-w-7xl",
+          "titleColor": "text-gray-900"
+        }
+      }
+    },
+    {
+      "type": "column",
+      "className": "flex-1",
+      "children": [
+        {
+          "type": "row",
+          "className": "max-w-7xl mx-auto w-full px-6 pt-6 gap-6",
+          "children": [
+            {
+              "component": "CategoryMenu",
+              "props": {
+                "styles": {
+                  "width": "w-64",
+                  "backgroundColor": "bg-white",
+                  "textColor": "text-gray-900",
+                  "hoverBackgroundColor": "hover:bg-gray-100",
+                  "hoverTextColor": "hover:text-gray-900",
+                  "padding": "1rem"
+                }
+              }
+            },
+            {
+              "component": "CategoriesSection",
+              "props": {
+                "title": "Categories",
+                "styles": {
+                  "containerMaxWidth": "max-w-7xl",
+                  "paddingY": "2rem",
+                  "titleSize": "text-3xl",
+                  "gridCols": "grid-cols-2 md:grid-cols-4 lg:grid-cols-8",
+                  "itemBackgroundColor": "bg-white",
+                  "itemHoverShadow": "shadow-md",
+                  "iconSize": "w-full"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "component": "BrandSection",
+          "item": "N/A"
+        }
+      ]
+    }
+  ]
+}

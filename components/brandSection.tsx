@@ -3,15 +3,16 @@
 import { useEffect, useState } from "react"
 import { api } from "@/data/api"
 
-type Category = {
+type Brand = {
   id: number
   name: string
   image: string
+  link?: string
 }
 
-type CategoriesSectionProps = {
+type BrandSectionProps = {
   title?: string
-  categories?: Category[]
+  brands?: Brand[]
   styles?: {
     containerMaxWidth?: string
     paddingY?: string
@@ -23,38 +24,38 @@ type CategoriesSectionProps = {
   }
 }
 
-export default function CategoriesSection({
-  title = "Categories",
-  categories,
+export default function BrandSection({
+  title,
+  brands,
   styles = {
     containerMaxWidth: "max-w-7xl",
     paddingY: "py-10",
     titleSize: "text-2xl",
-    gridCols: "grid-cols-2 md:grid-cols-4 lg:grid-cols-8",
+    gridCols: "grid-cols-3 md:grid-cols-6",
     itemBackgroundColor: "bg-white",
     itemHoverShadow: "hover:shadow-md",
-    iconSize: "w-14 h-14"
+    iconSize: "h-12"
   }
-}: CategoriesSectionProps) {
-  const [data, setData] = useState<Category[]>(categories || [])
-  const [loading, setLoading] = useState(!categories)
+}: BrandSectionProps) {
+  const [data, setData] = useState<Brand[]>(brands || [])
+  const [loading, setLoading] = useState(!brands)
 
   useEffect(() => {
-    if (!categories) {
-      api.getCategories().then(res => {
+    if (!brands) {
+      api.getBrands().then(res => {
         if (res) setData(res)
         setLoading(false)
       })
     }
-  }, [categories])
+  }, [brands])
 
   if (loading) {
     return (
       <section className={`${styles.containerMaxWidth} mx-auto px-6 ${styles.paddingY}`}>
         <div className="h-8 w-48 bg-slate-200 animate-pulse mb-6 rounded" />
-        <div className={`grid ${styles.gridCols} gap-6`}>
-          {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
-            <div key={i} className="h-32 bg-slate-200 animate-pulse rounded-xl" />
+        <div className={`grid ${styles.gridCols} gap-4`}>
+          {[1, 2, 3, 4, 5, 6].map(i => (
+            <div key={i} className="h-24 bg-slate-200 animate-pulse rounded-xl" />
           ))}
         </div>
       </section>
@@ -63,22 +64,22 @@ export default function CategoriesSection({
 
   return (
     <section className={`${styles.containerMaxWidth} mx-auto px-6 ${styles.paddingY}`}>
-      {/* TITLE */}
-      <h2 className={`${styles.titleSize} font-bold mb-6`}>
-        {title}
-      </h2>
+      {title && (
+        <h2 className={`${styles.titleSize} font-bold mb-6`}>
+          {title}
+        </h2>
+      )}
 
-      {/* GRID */}
-      <div className={`grid ${styles.gridCols} gap-6`}>
-        {data.map((cat) => (
-          <div
-            key={cat.id}
+      <div className={`grid ${styles.gridCols} gap-4`}>
+        {data.map((brand) => (
+          <a
+            key={brand.id}
+            href={brand.link || "#"}
             className={`
               flex
-              flex-col
               items-center
               justify-center
-              p-4
+              p-6
               border
               rounded-xl
               ${styles.itemHoverShadow}
@@ -87,20 +88,15 @@ export default function CategoriesSection({
               cursor-pointer
             `}
           >
-            {/* ICON */}
             <img
-              src={cat.image}
-              alt={cat.name}
-              className={`${styles.iconSize} mb-3 object-contain`}
+              src={brand.image}
+              alt={brand.name}
+              className={`${styles.iconSize} object-contain`}
             />
-
-            {/* NAME */}
-            <p className="text-sm font-medium text-center truncate w-full">
-              {cat.name}
-            </p>
-          </div>
+          </a>
         ))}
       </div>
     </section>
   )
 }
+

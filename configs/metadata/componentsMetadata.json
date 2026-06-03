@@ -1,0 +1,192 @@
+{
+  "Navbar": {
+    "purpose": "navigation",
+    "description": "Main site navigation bar at the top of the page containing branding, lookup features, and user interaction triggers.",
+    "editableProps": ["logoText", "showSearch", "showCart", "showProfile"],
+    "editableStyles": [
+      "backgroundColor",
+      "textColor",
+      "logoColor",
+      "searchBorderColor",
+      "buttonBackgroundColor",
+      "buttonTextColor",
+      "fontSize",
+      "containerMaxWidth",
+      "paddingY",
+      "shadow"
+    ],
+    "allowedValues": {
+      "showSearch": [true, false],
+      "showCart": [true, false],
+      "showProfile": [true, false]
+    }
+  },
+
+  "HeroBanner": {
+    "purpose": "marketing",
+    "description": "Main promotional carousel sliding banner showing critical marketing campaigns and call-to-actions.",
+    "editableProps": ["autoplay", "delay", "loop", "showPagination", "showButton", "showSubtitle", "showBadge", "imagePosition", "rounded"],
+    "editableStyles": [
+      "sectionBackground",
+      "cardBackground",
+      "badgeTextColor",
+      "titleTextColor",
+      "subtitleTextColor",
+      "buttonBackgroundColor",
+      "buttonTextColor",
+      "containerMaxWidth",
+      "paddingY",
+      "titleSize",
+      "subtitleSize"
+    ],
+    "allowedValues": {
+      "imagePosition": ["left", "right"],
+      "rounded": [true, false],
+      "autoplay": [true, false],
+      "showPagination": [true, false],
+      "showButton": [true, false],
+      "showSubtitle": [true, false],
+      "showBadge": [true, false]
+    }
+  },
+
+  "CategoryMenu": {
+    "purpose": "navigation",
+    "description": "Vertical contextual drawer layout showing available shop subcategories, visible on desktop views.",
+    "editableProps": [],
+    "editableStyles": [
+      "backgroundColor",
+      "textColor",
+      "hoverBackgroundColor",
+      "hoverTextColor",
+      "width",
+      "borderRadius",
+      "padding",
+      "fontSize",
+      "shadow"
+    ],
+    "allowedValues": {}
+  },
+
+  "BrandSection": {
+    "purpose": "marketing",
+    "description": "Grid display showcasing partnered marketplace brand logos.",
+    "editableProps": ["title"],
+    "editableStyles": [
+      "containerMaxWidth",
+      "paddingY",
+      "titleSize",
+      "gridCols",
+      "itemBackgroundColor",
+      "itemHoverShadow",
+      "iconSize"
+    ],
+    "allowedValues": {}
+  },
+
+  "FlashSaleSection": {
+    "purpose": "marketing",
+    "description": "Urgency-driven product horizontal scroller accompanied by a countdown timer.",
+    "editableProps": ["title", "endTime", "showTimer", "viewAllText"],
+    "editableStyles": [
+      "containerMaxWidth",
+      "paddingY",
+      "titleColor",
+      "timerBackground",
+      "timerTextColor",
+      "viewAllColor",
+      "cardWidth"
+    ],
+    "allowedValues": {
+      "showTimer": [true, false]
+    }
+  },
+
+  "CategoriesSection": {
+    "purpose": "navigation",
+    "description": "Visual responsive tile layout highlighting top product departments across the store.",
+    "editableProps": ["title"],
+    "editableStyles": [
+      "containerMaxWidth",
+      "paddingY",
+      "titleSize",
+      "gridCols",
+      "itemBackgroundColor",
+      "itemHoverShadow",
+      "iconSize"
+    ],
+    "allowedValues": {}
+  },
+
+  "JustForYouSection": {
+    "purpose": "content_display",
+    "description": "Personalized discovery product block rendered inside standard system layouts.",
+    "editableProps": ["title", "viewAllText"],
+    "editableStyles": [
+      "containerMaxWidth",
+      "paddingY",
+      "titleSize",
+      "viewAllColor"
+    ],
+    "allowedValues": {}
+  },
+
+  "ProductCard": {
+    "purpose": "content_display",
+    "description": "Isolated presentation container mapping metadata variables for singular inventory units.",
+    "editableProps": [],
+    "editableStyles": [
+      "backgroundColor",
+      "titleColor",
+      "priceColor",
+      "borderRadius",
+      "imageHeight",
+      "padding",
+      "shadow"
+    ],
+    "allowedValues": {}
+  },
+
+  "Cart": {
+    "purpose": "transactional",
+    "description": "Detailed multi-column checkout overview handling quantitative items staging and coupon adjustments.",
+    "editableProps": [],
+    "editableStyles": [
+      "containerMaxWidth",
+      "paddingY",
+      "cardBackgroundColor",
+      "buttonBackgroundColor",
+      "buttonTextColor"
+    ],
+    "allowedValues": {}
+  },
+
+  "Footer": {
+    "purpose": "navigation",
+    "description": "Structured multi-column informational footer containing legal links, contact resources, and copyrights.",
+    "editableProps": ["logoText", "copyrightText"],
+    "editableStyles": [
+      "backgroundColor",
+      "textColor",
+      "linkColor",
+      "containerMaxWidth",
+      "paddingY",
+      "fontSize",
+      "dividerColor",
+      "logoColor"
+    ],
+    "allowedValues": {}
+  },
+  "StaticBanner": {
+    "purpose": "marketing",
+    "description": "A non-sliding single-image promotional graphic card used for targeted visual ad spaces.",
+    "editableProps": ["image", "link"],
+    "editableStyles": [
+      "containerMaxWidth",
+      "paddingY",
+      "borderRadius",
+      "height"
+    ],
+    "allowedValues": {}
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "type": "column",
+  "children": [
+    {
+      "component": "Navbar",
+      "props": {
+        "logoText": "ModuShop",
+        "showSearch": true,
+        "showCart": true,
+        "showProfile": true,
+        "styles": {
+          "backgroundColor": "bg-white",
+          "logoColor": "text-orange-500",
+          "buttonBackgroundColor": "bg-orange-500",
+          "containerMaxWidth": "max-w-7xl"
+        }
+      }
+    },
+    {
+      "component": "ProductDetail",
+      "props": {
+        "styles": {
+          "containerMaxWidth": "max-w-7xl",
+          "paddingY": "py-10",
+          "cardBackgroundColor": "bg-white"
+        }
+      }
+    },
+    {
+      "component": "JustForYouSection",
+      "props": {
+        "title": "Related Products",
+        "styles": {
+          "containerMaxWidth": "max-w-7xl",
+          "viewAllColor": "text-orange-500"
+        }
+      }
+    },
+    {
+      "component": "Footer",
+      "props": {
+        "logoText": "ModuShop",
+        "styles": {
+          "backgroundColor": "bg-slate-900",
+          "containerMaxWidth": "max-w-7xl"
+        }
+      }
+    }
+  ]
+}

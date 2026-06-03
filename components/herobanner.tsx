@@ -1,164 +1,205 @@
 "use client"
 
+import { useEffect, useState, useRef } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Autoplay, Pagination } from "swiper/modules"
 
 import "swiper/css"
 import "swiper/css/pagination"
 
-import { banners } from "@/data/banners"
+import { api } from "@/data/api"
 
-type BannerItem ={
-    id: string | number
-    title:String
-    subtitle? : string
-    button? : string
-    image: string
+type BannerItem = {
+  id: string | number
+  title: string
+  subtitle?: string
+  button?: string
+  image: string
 }
 
-type Bannerprops ={
-    banner?:BannerItem[]
-    autoplay?: boolean
-    delay?: number
-    clickable? :boolean
-    loop?:boolean
-    showPagination?:boolean
-    showButton?:boolean
-    showSubtitle?:boolean
-    showBadge?:boolean
-
-    varieant?: "default" | "minimal"  | "modern"
-
-    imagePosition? : "left"| "right"
-
-    rounded? : boolean
-
+type HeroBannerProps = {
+  banner?: BannerItem[]
+  autoplay?: boolean
+  delay?: number
+  loop?: boolean
+  showPagination?: boolean
+  showButton?: boolean
+  showSubtitle?: boolean
+  showBadge?: boolean
+  imagePosition?: "left" | "right"
+  rounded?: boolean
+  styles?: {
+    sectionBackground?: string
+    cardBackground?: string
+    badgeTextColor?: string
+    titleTextColor?: string
+    subtitleTextColor?: string
+    buttonBackgroundColor?: string
+    buttonTextColor?: string
+    containerMaxWidth?: string
+    paddingY?: string
+    titleSize?: string
+    subtitleSize?: string
+  }
 }
+
+const DEFAULT_STYLES = {
+  sectionBackground: "bg-orange-50",
+  cardBackground: "bg-white",
+  badgeTextColor: "text-orange-500",
+  titleTextColor: "text-slate-900",
+  subtitleTextColor: "text-slate-600",
+  buttonBackgroundColor: "bg-orange-500",
+  buttonTextColor: "text-white",
+  containerMaxWidth: "max-w-7xl",
+  paddingY: "py-6",
+  titleSize: "text-5xl",
+  subtitleSize: "text-lg"
+}
+
 export default function HeroBanner({
-    banner= banners,
-    autoplay= true,
-    delay = 3000,
-    clickable = true,
-    loop = true,
-    showPagination = true,
-    showButton = true,
-    showSubtitle = true,
-    showBadge = true,
-    imagePosition = "right",
-    rounded = true
-}) {
+  banner,
+  autoplay = true,
+  delay = 3000,
+  loop = true,
+  showPagination = true,
+  showButton = true,
+  showSubtitle = true,
+  showBadge = true,
+  imagePosition = "right",
+  rounded = true,
+  styles = {}
+}: HeroBannerProps) { 
+
+  const [data, setData] = useState<BannerItem[]>(banner || [])
+  const [loading, setLoading] = useState(!banner)
+  const [swiperKey, setSwiperKey] = useState(0)
+  const mergedStyles = { ...DEFAULT_STYLES, ...styles }
+
+  useEffect(() => {
+    if (!banner) {
+      api.getBanners().then(res => {
+        if (res) {
+          setData(res)
+          // Force Swiper to reinitialize after images load
+          setTimeout(() => setSwiperKey(prev => prev + 1), 100)
+        }
+        setLoading(false)
+      })
+    }
+  }, [banner])
+
+  // Force Swiper update when data changes
+  useEffect(() => {
+    if (data.length > 0) {
+      setSwiperKey(prev => prev + 1)
+    }
+  }, [data])
+
+  if (loading) {
+    return (
+      <section className={mergedStyles.sectionBackground}>
+        <div className={`mx-auto ${mergedStyles.containerMaxWidth} px-6 ${mergedStyles.paddingY}`}>
+          <div className="w-full h-[450px] bg-slate-200 animate-pulse rounded-3xl" />
+        </div>
+      </section>
+    )
+  }
+
+  if (!data || data.length === 0) return null
 
   return (
-
-    <section className="bg-orange-50">
-
-      <div
-        className="
-          max-w-350
-          mx-auto
-          px-6
-          py-6
-        "
-      >
-
+    <section className={`${mergedStyles.sectionBackground} w-full min-w-0 overflow-hidden`}>
+      <div className={`mx-auto ${mergedStyles.containerMaxWidth} px-6 ${mergedStyles.paddingY} w-full min-w-0`}>
         <Swiper
+          key={swiperKey}
           modules={[Autoplay, Pagination]}
-          autoplay={ autoplay? {delay} : false}
-          pagination={showPagination ? {clickable :true} :false}
-          loop={true}
+          autoplay={autoplay ? { delay, disableOnInteraction: false } : false}
+          pagination={showPagination ? { clickable: true, dynamicBullets: true } : false}
+          loop={loop}
+          observer={true}
+          observeParents={true}
+          updateOnWindowResize={true}
+          slidesPerView={1}
+          spaceBetween={0}
+          onSwiper={(swiper) => {
+  // Force update after swiper is initialized with safety guardrails
+  setTimeout(() => {
+    if (swiper && !swiper.destroyed && typeof swiper.update === 'function') {
+      swiper.update()
+      swiper.updateSize()
+    }
+  }, 0)
+}}
+          className="rounded-3xl w-full"
         >
-
-          {banners.map((banner) => (
-
-            <SwiperSlide key={banner.id}>
-
+          {data.map((item, idx) => (
+            <SwiperSlide key={`${item.id}-${idx}`} className="w-full">
               <div
-                className="
-                  grid
-                  grid-cols-2
-                  gap-10
-                  items-center
-                  bg-white
-                  rounded-3xl
-                  overflow-hidden
-                  p-10
-                "
+                className={`
+                  grid grid-cols-1 md:grid-cols-2 gap-10 items-center overflow-hidden p-10 min-h-[450px] w-full
+                  ${mergedStyles.cardBackground}
+                  ${rounded ? "rounded-3xl" : ""}
+                `}
               >
+                
+                {/* TEXT CONTENT CONTAINER */}
+                <div
+                  className={`
+                    flex flex-col justify-center h-full w-full min-w-0
+                    ${imagePosition === "left" ? "md:order-2" : "md:order-1"}
+                  `}
+                >
+                  {showBadge && (
+                    <p className={`${mergedStyles.badgeTextColor} font-semibold mb-3`}>
+                      SPECIAL OFFER
+                    </p>
+                  )}
 
-                {/* LEFT */}
-                <div>
-
-                  <p
-                    className="
-                      text-orange-500
-                      font-semibold
-                      mb-3
-                    "
-                  >
-                    SPECIAL OFFER
-                  </p>
-
-                  <h1
-                    className="
-                      text-5xl
-                      font-bold
-                      leading-tight
-                      mb-5
-                    "
-                  >
-                    {banner.title}
+                  <h1 className={`${mergedStyles.titleSize} font-bold leading-tight mb-5 ${mergedStyles.titleTextColor} break-words`}>
+                    {item.title}
                   </h1>
 
-                  <p
-                    className="
-                      text-slate-600
-                      text-lg
-                      mb-8
-                    "
-                  >
-                    {banner.subtitle}
-                  </p>
+                  {showSubtitle && item.subtitle && (
+                    <p className={`${mergedStyles.subtitleTextColor} ${mergedStyles.subtitleSize} mb-8 break-words`}>
+                      {item.subtitle}
+                    </p>
+                  )}
 
-                  <button
-                    className="
-                      bg-orange-500
-                      text-white
-                      px-8
-                      py-4
-                      rounded-xl
-                    "
-                  >
-                    {banner.button}
-                  </button>
-
+                  {showButton && item.button && (
+                    <div>
+                      <button className={`${mergedStyles.buttonBackgroundColor} ${mergedStyles.buttonTextColor} px-8 py-4 rounded-xl transition-transform active:scale-95`}>
+                        {item.button}
+                      </button>
+                    </div>
+                  )}
                 </div>
 
-                {/* RIGHT */}
-                <div>
-
+                {/* IMAGE CONTAINER - Fixed for cross-browser compatibility */}
+                <div
+                  className={`
+                    relative w-full h-[300px] md:h-[450px] rounded-2xl overflow-hidden
+                    ${imagePosition === "left" ? "md:order-1" : "md:order-2"}
+                  `}
+                >
                   <img
-                    src={banner.image}
-                    alt={banner.title}
-                    className="
-                      w-full
-                      h-112.5
-                      object-cover
-                      rounded-2xl
-                    "
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover"
+                    onLoad={(e) => {
+                      // Ensure image is loaded and trigger Swiper update
+                      const img = e.currentTarget
+                      img.classList.add('opacity-100')
+                    }}
+                    style={{ opacity: 0, transition: 'opacity 0.3s' }}
                   />
-
                 </div>
 
               </div>
-
             </SwiperSlide>
-
           ))}
-
         </Swiper>
-
       </div>
-
     </section>
   )
 }

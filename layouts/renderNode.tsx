@@ -5,6 +5,11 @@ import CategoriesSection from "@/components/categoriesSection"
 import FlashSaleSection from "@/components/flashsale"
 import JustForYouSection from "@/components/justforyou"
 import Footer from "@/components/footer"
+import CategoryMenu from "@/components/categoryMenu"
+import StaticBanner from "@/components/staticBanner"
+import BrandSection from "@/components/brandSection"
+import ProductDetail from "@/components/productDetail"
+import Cart from "@/components/cart"
 
 const componentMap: any = {
   Navbar,
@@ -14,45 +19,51 @@ const componentMap: any = {
   FlashSaleSection,
   JustForYouSection,
   Footer,
-
-
+  CategoryMenu,
+  StaticBanner,
+  BrandSection,
+  ProductDetail,
+  Cart
 }
 
-export function renderNode(node: any, index = 0): React.ReactNode {
+export  function renderNode(node: any, context?: any, index = 0): React.ReactNode {
+  if (!node) return null
 
+  // Handle layout types (row/column)
   if (node.type) {
-
     const isRow = node.type === "row"
-
+    
     return (
       <div
         key={index}
-        className={`flex gap-4 w-full ${
-          isRow ? "flex-row" : "flex-col"
-        }`}
-        style={{
-          width: node.width || "100%"
-        }}
+        className={`${isRow ? "flex flex-row" : "flex flex-col"} ${node.className || ""}`}
+        style={node.containerStyles}
       >
         {node.children?.map((child: any, childIndex: number) =>
-          renderNode(child, childIndex)
+          renderNode(child, context, childIndex)
         )}
       </div>
     )
   }
 
+  // Handle components
   if (node.component) {
-
     const Component = componentMap[node.component]
+    if (!Component) {
+      console.warn(`Component ${node.component} not found`)
+      return null
+    }
 
+    // Pass width as className if provided
+    const widthClass = node.width ? `w-[${node.width}]` : ""
+    
     return (
       <div
         key={index}
-        style={{
-          width: node.width || "100%"
-        }}
+        className={`${node.className || ""} ${widthClass}`}
+        style={node.containerStyles}
       >
-        <Component {...node.props} />
+        <Component {...node.props} context={context} />
       </div>
     )
   }
